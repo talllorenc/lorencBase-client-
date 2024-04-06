@@ -1,4 +1,4 @@
-import { User } from "@/types/AuthFormData";
+import { ILoginUser } from "@/types/AuthFormData";
 import { api } from "./api";
 
 export const userApi = api.injectEndpoints({
@@ -28,7 +28,7 @@ export const userApi = api.injectEndpoints({
         body: data,
       }),
     }),
-    profile: builder.query<User, void>({
+    profile: builder.query<ILoginUser, void>({
       query: () => ({ url: "/auth/profile", method: "GET" }),
     }),
   }),
