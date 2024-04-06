@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 
-export function PopupRegister({closePopupRegister}) {
+interface PopupRegisterProps {
+  closePopupRegister: () => void; 
+}
+
+export function PopupRegister({ closePopupRegister }: PopupRegisterProps) {
   return (
     <div className="fixed bottom-0 left-0 w-full mb-8 px-8">
       <div className="border border-[#5f5f5f] max-w-5xl mx-auto bg-black sm:bg-transparent backdrop-blur p-2 flex flex-col gap-2 items-center text-center">
