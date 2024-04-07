@@ -9,9 +9,9 @@ interface PopupRegisterProps {
 export function PopupRegister({ closePopupRegister }: PopupRegisterProps) {
   return (
     <div className="fixed bottom-0 left-0 w-full mb-8 px-8">
-      <div className="border border-[#5f5f5f] max-w-5xl mx-auto bg-black sm:bg-transparent backdrop-blur p-2 flex flex-col gap-2 items-center text-center">
-        <p className="font-bold text-center text-lg">DESCRIPTION</p>
-        <span className="text-md">
+      <div className="border border-[#fdbf1f] max-w-5xl mx-auto bg-gray-800 p-4 flex flex-col gap-2 items-center text-center">
+        <p className="font-bold text-center text-lg text-[#fdbf1f]">DESCRIPTION</p>
+        <span className="text-md text-[#fdbf1f]">
           As a regular user, you can browse content but wont be able to create
           or modify notes. For elevated privileges, please contact the
           administrator
@@ -19,7 +19,7 @@ export function PopupRegister({ closePopupRegister }: PopupRegisterProps) {
         <div className="flex gap-8">
           <Link
             href="/contacts"
-            className="font-bold px-2 shadow-button bg-white text-black transition-all duration-200 cursor-pointer hover:bg-black hover:text-white"
+            className="font-bold px-2 shadow-button bg-white text-black transition-all duration-200 cursor-pointer hover:bg-[#21232c] hover:text-white"
           >
             CONTACTS
           </Link>

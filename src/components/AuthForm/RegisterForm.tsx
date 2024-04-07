@@ -4,22 +4,25 @@ import { useRouter } from "next/navigation";
 import { IRegisterUser } from "@/types/AuthFormData";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useRegisterMutation } from "@/services/user.service";
+import { useState } from "react";
+import ErrorMesage from "../ErrorMesage/ErrorMesage";
 
 const loginRules = /^[A-Za-z0-9]+$/;
 const passwordRules = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/;
 
 const basicSchema = yup.object().shape({
-  email: yup.string().required("*required").email("*email is invalid"),
+  email: yup.string().required("*required").email("*invalid format"),
   name: yup
     .string()
     .required("*required")
-    .min(5, "*minimum of 5 characters")
-    .matches(loginRules, { message: "*latin characters only" }),
+    .min(5, "*invalid format")
+    .matches(loginRules, { message: "*invalid format" }),
   password: yup
     .string()
-    .min(6, "*minimum of 6 characters")
+    .min(6, "*invalid format")
     .matches(passwordRules, {
-      message: "*special character and capital letter",
+      message: "*invalid format",
     })
     .required("*required field"),
     confirmPassword: yup
@@ -30,6 +33,9 @@ const basicSchema = yup.object().shape({
 
 const RegisterForm = () => {
   const router = useRouter();
+  const [register, { isLoading }] = useRegisterMutation();
+  const [error, setError] = useState("");
+
   const {
     values,
     handleChange,
@@ -48,10 +54,10 @@ const RegisterForm = () => {
     validationSchema: basicSchema,
     onSubmit: async (values: IRegisterUser) => {
       try {
-        console.log("register");
-        router.push("/");
-      } catch (error) {
-        console.error("Error:", error);
+        await register(values).unwrap();
+        router.push("/login");
+      } catch (error: any) {
+        setError(error.data.error);
       }
     },
   });
@@ -75,7 +81,7 @@ const RegisterForm = () => {
         />
         <div className="flex items-center gap-2">
           <p className="text-[#FF3333] text-xl">*</p>
-          <p className="text-[#8c8b8b] font-bold">Required field</p>
+          <p className="font-bold">Required field</p>
         </div>
 
         {errors.email && touched.email && (
@@ -102,7 +108,7 @@ const RegisterForm = () => {
         />
         <div className="flex items-center gap-2">
           <p className="text-[#FF3333] text-xl">*</p>
-          <p className="text-[#8c8b8b] font-bold">
+          <p className="font-bold">
             Must have more than 5 letters
           </p>
         </div>
@@ -130,7 +136,7 @@ const RegisterForm = () => {
         />
         <div className="flex items-center gap-2">
           <p className="text-[#FF3333] text-xl">*</p>
-          <p className="text-[#8c8b8b] font-bold">
+          <p className="font-bold">
             More than 6 characters, 1 uppercase letter, 1 special character
           </p>
         </div>
@@ -158,7 +164,7 @@ const RegisterForm = () => {
         />
         <div className="flex items-center gap-2">
           <p className="text-[#FF3333] text-xl">*</p>
-          <p className="text-[#8c8b8b] font-bold">Required field</p>
+          <p className="font-bold">Required field</p>
         </div>
 
         {errors.confirmPassword && touched.confirmPassword && (
@@ -168,9 +174,11 @@ const RegisterForm = () => {
         )}
       </div>
 
+      <ErrorMesage error={error}/>
+
       <button
         type="submit"
-        className="w-full  shadow-button text-lg bg-white text-black p-2 transition-all duration-200 cursor-pointer font-bold hover:bg-black hover:text-white"
+        className="w-full  shadow-button text-lg bg-white text-black p-2 transition-all duration-200 cursor-pointer font-bold hover:bg-[#21232c] hover:text-white"
       >
         JOIN
       </button>

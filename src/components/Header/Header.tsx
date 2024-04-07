@@ -42,7 +42,7 @@ export function Header() {
             ))}
             <Link
               href="/login"
-              className="bg-white text-black shadow-button transition-all duration-200 px-2 font-medium hover:bg-black hover:text-white "
+              className="bg-white text-black shadow-button transition-all duration-200 px-2 font-medium hover:bg-[#21232c] hover:text-white "
             >
               LOGIN
             </Link>
