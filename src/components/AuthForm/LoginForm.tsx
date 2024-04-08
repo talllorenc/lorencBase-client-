@@ -17,7 +17,7 @@ const basicSchema = yup.object().shape({
 export function LoginForm() {
   const router = useRouter();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const [error, setError] = useState("");
   const [triggerCurrentUser] = useLazyProfileQuery();
 
@@ -29,7 +29,7 @@ export function LoginForm() {
     handleSubmit,
     errors,
     isValid,
-  } = useFormik({
+  } = useFormik<ILoginUser>({
     initialValues: {
       email: "",
       password: "",

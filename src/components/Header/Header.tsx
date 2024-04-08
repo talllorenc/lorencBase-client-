@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LoginButton } from "../LoginButton/LoginButton";
 
 const headerLinks = [
   {
@@ -19,7 +20,10 @@ export function Header() {
     <header className="w-full fixed top-0 left-0 backdrop-blur z-50">
       <div className="w-full max-w-7xl mx-auto px-5">
         <nav className="flex items-center justify-between py-2">
-          <Link href="/" className="flex transition-all duration-200 items-center hover:scale-110">
+          <Link
+            href="/"
+            className="flex transition-all duration-200 items-center hover:scale-110"
+          >
             <Image
               src="/header/main_logo.png"
               width={30}
@@ -40,12 +44,7 @@ export function Header() {
                 {link.title}
               </Link>
             ))}
-            <Link
-              href="/login"
-              className="bg-white text-black shadow-button transition-all duration-200 px-2 font-medium hover:bg-[#21232c] hover:text-white "
-            >
-              LOGIN
-            </Link>
+            <LoginButton />
           </div>
         </nav>
       </div>

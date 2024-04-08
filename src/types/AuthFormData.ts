@@ -9,3 +9,12 @@ export interface IRegisterUser {
   password: string;
   confirmPassword: string;
 }
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  passwordHash: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
