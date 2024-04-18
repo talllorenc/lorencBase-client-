@@ -15,7 +15,6 @@ const basicSchema = yup.object().shape({
     .max(15, "*invalid format"),
   email: yup.string().required("*required").email("*invalid format"),
   message: yup.string().required("*required").max(100, "*invalid format"),
-  recaptcha: yup.string().required("*required"),
 });
 
 export function ContactsForm() {
