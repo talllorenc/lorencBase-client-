@@ -25,16 +25,6 @@ export function ContactsForm() {
   const [success, setSuccess] = useState(false);
   const [captchaError, setCaptchaError] = useState(false);
 
-  const handleCaptchaVerify = (response: string | null) => {
-    if (response) {
-      setCaptchaError(false);
-      setFieldValue("recaptcha", response);
-    } else {
-      setCaptchaError(true);
-    }
-  };
-
-
   const {
     values,
     handleChange,
@@ -43,7 +33,7 @@ export function ContactsForm() {
     handleSubmit,
     errors,
     isValid,
-    setFieldValue
+    setFieldValue,
   } = useFormik({
     initialValues: {
       name: "",
@@ -61,16 +51,19 @@ export function ContactsForm() {
       }
 
       try {
-        const response = await fetch("http://localhost:8080/api/verify-recaptcha", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...values,
-            recaptcha: values.recaptcha, 
-          }),
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/verify-recaptcha",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...values,
+              recaptcha: values.recaptcha,
+            }),
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -224,17 +217,12 @@ export function ContactsForm() {
           )}
         </div>
 
-        <div className="">
-          <Recaptcha
-            sitekey="6LdeN78pAAAAAJvMFj_s9TH8Ze5k8c1H0XsHe2a4"
-            onChange={handleCaptchaVerify}
-          />
-          {errors.recaptcha && touched.recaptcha && (
-            <span className="text-[#FF3333] top-0 right-1 p-2 font-bold">
-              {errors.recaptcha}
-            </span>
-          )}
-        </div>
+        <Recaptcha
+          sitekey="6LdeN78pAAAAAJvMFj_s9TH8Ze5k8c1H0XsHe2a4"
+          onChange={(value) => {
+            setCaptchaError(false);
+          }}
+        />
 
         <button
           type="submit"
