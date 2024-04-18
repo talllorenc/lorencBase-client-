@@ -25,11 +25,16 @@ export function ContactsForm() {
   const [success, setSuccess] = useState(false);
   const [captchaError, setCaptchaError] = useState(false);
 
-  const handleCaptchaVerify = (response: any) => {
+  const handleCaptchaVerify = (response: string | null) => {
     if (response) {
-      setCaptchaError(false); 
+      setCaptchaError(false);
+      setFieldValue("recaptcha", response);
+    } else {
+      setCaptchaError(true);
     }
   };
+
+
   const {
     values,
     handleChange,
@@ -38,6 +43,7 @@ export function ContactsForm() {
     handleSubmit,
     errors,
     isValid,
+    setFieldValue
   } = useFormik({
     initialValues: {
       name: "",
