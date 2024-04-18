@@ -1,6 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { LoginButton } from "../LoginButton/LoginButton";
+import MobileMenu from "../MobileMenu/MobileMenu";
+import { useState } from "react";
+import {FaBars} from "react-icons/fa"
 
 const headerLinks = [
   {
@@ -16,6 +18,16 @@ const headerLinks = [
 ];
 
 export function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="w-full fixed top-0 left-0 backdrop-blur z-50">
       <div className="w-full max-w-7xl mx-auto px-5">
@@ -24,17 +36,10 @@ export function Header() {
             href="/"
             className="flex transition-all duration-200 items-center hover:scale-110"
           >
-            <Image
-              src="/header/main_logo.png"
-              width={30}
-              height={30}
-              className="w-full h-full object-contain rounded-xl"
-              alt="main logo"
-            />
-            <p className="text-3xl">lb.</p>
+            <p className="text-3xl font-bold">lorencBase</p>
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-4">
             {headerLinks.map((link) => (
               <Link
                 key={link.id}
@@ -45,6 +50,11 @@ export function Header() {
               </Link>
             ))}
             <LoginButton />
+          </div>
+
+          <div className="sm:hidden">
+            <FaBars onClick={toggleMenu} className="text-2xl"/>
+            <MobileMenu isMenuOpen={isMenuOpen} closeMenu={closeMenu}/>
           </div>
         </nav>
       </div>

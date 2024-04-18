@@ -15,8 +15,14 @@ const config: Config = {
         xl: "1280px",
       },
       boxShadow: {
-        button: "2px 2px 7px 1px rgba(255, 255, 255, 1)",
+        buttonMain: "2px 2px 7px 1px rgba(250,240,230, 1)",
+        buttonMainBrick: "0px 0px 7px 4px rgba(250,240,230, 1)",
+        buttonMainDark: "2px 2px 7px 1px rgba(0,26,44, 1)",
+        buttonMainDarkBrick: "0px 0px 7px 4px rgba(0,26,44, 1)",
         buttonRed: "2px 2px 7px 1px rgba(255,51,51, 1)",
+        buttonRedBrick: "0px 0px 7px 4px rgba(255,51,51, 1)",
+        buttonGreen: "2px 2px 7px 1px rgba(34,197,94, 1)",
+        buttonGreenBrick: "0px 0px 7px 4px rgba(34,197,94, 1)",
       },
       keyframes: {
         "slide-tl": {

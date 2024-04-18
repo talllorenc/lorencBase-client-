@@ -1,8 +1,10 @@
+"use client";
+
 export function ProfileInfo() {
-    return (
-        <div>
-            <p className="">Name</p>
-            <p>Email</p>
-        </div>
-    );
+
+  return (
+    <div className="">
+      Profile Info
+    </div>
+  );
 }

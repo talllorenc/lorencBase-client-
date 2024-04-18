@@ -10,10 +10,11 @@ export interface IRegisterUser {
   confirmPassword: string;
 }
 
-export interface User {
+export interface IUser {
   _id: string;
   name: string;
   email: string;
+  role: string;
   passwordHash: string;
   createdAt: Date;
   updatedAt: Date;

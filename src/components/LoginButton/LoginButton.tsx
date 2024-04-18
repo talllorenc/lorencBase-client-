@@ -1,38 +1,39 @@
-import {
-  selectCurrentUser,
-  selectIsAuthenticated,
-  logout,
-} from "@/redux/slices/userSlice";
 import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { PopupAuth } from "../PopupAuth/PopupAuth";
 
 export function LoginButton() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    localStorage.removeItem("token");
-    router.push("/");
+  const togglePopup = () => {
+    setPopupOpen(!popupOpen);
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
   };
 
   return (
     <>
       {!isAuthenticated ? (
-        <Link
-          href="/login"
-          className="bg-white text-black shadow-button transition-all duration-200 px-2 font-bold hover:bg-[#21232c] hover:text-white "
+        <button
+          onClick={togglePopup}
+          className="bg-[#FAF0E6] text-black shadow-buttonMain transition-all duration-200 px-4 py-1 font-bold hover:shadow-buttonMainBrick"
         >
           LOGIN
-        </Link>
+        </button>
       ) : (
         <div>
-          <button onClick={handleLogout} className="text-[#480607] font-bold bg-[#FF3333] shadow-buttonRed transition-all duration-200 px-2 hover:bg-[#480607] hover:text-[#FF3333]">LOGOUT</button>
+          <button className="text-[#480607] font-bold bg-[#FF3333] shadow-buttonRed transition-all duration-200 px-2 hover:bg-[#480607] hover:text-[#FF3333]">
+            LOGOUT
+          </button>
         </div>
       )}
+      <PopupAuth popupOpen={popupOpen} closePopup={closePopup}/>
     </>
   );
 }

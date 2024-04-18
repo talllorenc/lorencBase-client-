@@ -10,9 +10,10 @@
 
 html,
 body {
-  background-color: #21232c;
-  color: #a3a7b1;
+  background-color: #0A0A0A;
+  color: #FAF0E6;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 a {
@@ -25,3 +26,20 @@ a {
   padding: 0 18px;
   margin: 0 auto;
 }
+
+.spinner-border {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-width: 2px;
+  border-color: currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin .75s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+

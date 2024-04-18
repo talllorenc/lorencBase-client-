@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { IRegisterUser } from "@/types/AuthFormData";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useRegisterMutation } from "@/services/user.service";
 import { useState } from "react";
 import ErrorMesage from "../ErrorMesage/ErrorMesage";
 
@@ -33,7 +32,6 @@ const basicSchema = yup.object().shape({
 
 const RegisterForm = () => {
   const router = useRouter();
-  const [register, { isLoading }] = useRegisterMutation();
   const [error, setError] = useState("");
 
   const {
@@ -54,7 +52,8 @@ const RegisterForm = () => {
     validationSchema: basicSchema,
     onSubmit: async (values: IRegisterUser) => {
       try {
-        await register(values).unwrap();
+        console.log("register");
+        
         router.push("/login");
       } catch (error: any) {
         setError(error.data.error);
@@ -178,7 +177,7 @@ const RegisterForm = () => {
 
       <button
         type="submit"
-        className="w-full  shadow-button text-lg bg-white text-black p-2 transition-all duration-200 cursor-pointer font-bold hover:bg-[#21232c] hover:text-white"
+        className="w-full  shadow-button text-lg bg-[#FAF0E6] text-black p-2 transition-all duration-200 cursor-pointer font-bold hover:shadow-buttonMainBrick"
       >
         JOIN
       </button>
