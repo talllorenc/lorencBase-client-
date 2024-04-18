@@ -39,88 +39,42 @@ export function ContactsForm() {
       name: "",
       email: "",
       message: "",
-      recaptcha: "",
     },
     validationSchema: basicSchema,
     onSubmit: async (values, { resetForm }) => {
       setSending(true);
 
-      if (!captchaError) {
+      const recaptchaValue = formRef.current!["g-recaptcha-response"].value;
+      console.log(recaptchaValue);
+
+      if (!recaptchaValue) {
+        setSending(false);
+        setError(false);
+        setSuccess(false);
         setCaptchaError(true);
         return;
       }
 
-      try {
-        const response = await fetch(
-          "http://localhost:8080/api/verify-recaptcha",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...values,
-              recaptcha: values.recaptcha,
-            }),
+      emailjs
+        .sendForm(
+          "service_677owqj",
+          "template_q1gdp1x",
+          formRef.current!,
+          "aKZuUw2Oseva1iRsh"
+        )
+        .then(
+          (result) => {
+            setSending(false);
+            setError(false);
+            setSuccess(true);
+            resetForm();
+          },
+          (error) => {
+            setSending(false);
+            setError(true);
+            setSuccess(false);
           }
         );
-
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success) {
-            emailjs
-              .sendForm(
-                "service_677owqj",
-                "template_q1gdp1x",
-                formRef.current!,
-                "aKZuUw2Oseva1iRsh"
-              )
-              .then(
-                (result) => {
-                  setSending(false);
-                  setError(false);
-                  setSuccess(true);
-                  resetForm();
-                },
-                (error) => {
-                  setSending(false);
-                  setError(true);
-                  setSuccess(false);
-                }
-              );
-          } else {
-            throw new Error("reCAPTCHA verification failed");
-          }
-        } else {
-          throw new Error("Failed to send form");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        setSending(false);
-        setError(true);
-        setSuccess(false);
-      }
-
-      //   emailjs
-      //     .sendForm(
-      //       "service_677owqj",
-      //       "template_q1gdp1x",
-      //       formRef.current!,
-      //       "aKZuUw2Oseva1iRsh"
-      //     )
-      //     .then(
-      //       (result) => {
-      //         setSending(false);
-      //         setError(false);
-      //         setSuccess(true);
-      //         resetForm();
-      //       },
-      //       (error) => {
-      //         setSending(false);
-      //         setError(true);
-      //         setSuccess(false);
-      //       }
-      //     );
     },
   });
 
