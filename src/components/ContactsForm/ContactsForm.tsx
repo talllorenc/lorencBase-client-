@@ -45,7 +45,6 @@ export function ContactsForm() {
       setSending(true);
 
       const recaptchaValue = formRef.current!["g-recaptcha-response"].value;
-      console.log(recaptchaValue);
 
       if (!recaptchaValue) {
         setSending(false);
@@ -55,26 +54,52 @@ export function ContactsForm() {
         return;
       }
 
-      emailjs
-        .sendForm(
-          "service_677owqj",
-          "template_q1gdp1x",
-          formRef.current!,
-          "aKZuUw2Oseva1iRsh"
-        )
-        .then(
-          (result) => {
-            setSending(false);
-            setError(false);
-            setSuccess(true);
-            resetForm();
+      try {
+        const response = await fetch("http://localhost:8080/api/verify-recaptcha", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-          (error) => {
-            setSending(false);
-            setError(true);
-            setSuccess(false);
+          body: JSON.stringify({
+            recaptchaToken: recaptchaValue,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            emailjs
+              .sendForm(
+                "service_677owqj",
+                "template_q1gdp1x",
+                formRef.current!,
+                "aKZuUw2Oseva1iRsh"
+              )
+              .then(
+                (result) => {
+                  setSending(false);
+                  setError(false);
+                  setSuccess(true);
+                  resetForm();
+                },
+                (error) => {
+                  setSending(false);
+                  setError(true);
+                  setSuccess(false);
+                }
+              );
+          } else {
+            throw new Error("reCAPTCHA verification failed");
           }
-        );
+        } else {
+          throw new Error("Failed to verify reCAPTCHA token");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setSending(false);
+        setError(true);
+        setSuccess(false);
+      }
     },
   });
 
