@@ -26,10 +26,11 @@ export function ContactsForm() {
   const [success, setSuccess] = useState(false);
   const [captchaError, setCaptchaError] = useState(false);
 
-  const handleCaptchaVerify = () => {
-    setCaptchaError(true);
+  const handleCaptchaVerify = (response: any) => {
+    if (response) {
+      setCaptchaError(false); 
+    }
   };
-
   const {
     values,
     handleChange,
@@ -124,9 +125,6 @@ export function ContactsForm() {
       //     );
     },
   });
-  function setFieldValue(arg0: string, response: any) {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <div>
