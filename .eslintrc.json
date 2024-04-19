@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"next": "^11.1.2"
+	},
 	"extends": "next/core-web-vitals",
 	"rules": {
 		"react/no-unescaped-entities": "off",

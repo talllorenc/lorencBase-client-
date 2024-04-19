@@ -6,7 +6,7 @@ const Profile = () => {
       <div className="py-12 sm:py-16 lg:py-20">
         <h1 className="text-center text-6xl font-bold">PROFILE</h1>
         <div className="mt-8 mx-auto">
-            <ProfileInfo/>
+          <ProfileInfo />
         </div>
       </div>
     </section>

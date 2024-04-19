@@ -43,3 +43,14 @@ a {
   100% { transform: rotate(360deg); }
 }
 
+.ce-toolbar__plus, 
+.ce-toolbar__settings-btn{
+  color: #FAF0E6;
+}
+
+
+
+#editor-container{
+  border: 2px solid #FAF0E6;
+}
+

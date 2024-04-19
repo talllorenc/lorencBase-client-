@@ -4,7 +4,7 @@ import emailjs from "@emailjs/browser";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
-import { FaSpinner } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaGoogle } from "react-icons/fa";
 import Recaptcha from "react-google-recaptcha";
 
 const basicSchema = yup.object().shape({
@@ -55,15 +55,18 @@ export function ContactsForm() {
       }
 
       try {
-        const response = await fetch("http://localhost:8080/api/verify-recaptcha", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            recaptchaToken: recaptchaValue,
-          }),
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/verify-recaptcha",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              recaptchaToken: recaptchaValue,
+            }),
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -219,6 +222,15 @@ export function ContactsForm() {
           )}
         </button>
       </form>
+
+      <div className="flex flex-col gap-2 mt-12 items-center">
+        <p className="text-xl border-b-2 border-[#FAF0E6]">SOTIALS</p>
+        <div className="text-3xl flex gap-4">
+          <FaGithub className="cursor-pointer transistion-all duration-200 hover:scale-110" />
+          <FaInstagram className="cursor-pointer transistion-all duration-200 hover:scale-110" />
+          <FaGoogle className="cursor-pointer transistion-all duration-200 hover:scale-110" />
+        </div>
+      </div>
 
       <div className="flex items-center justify-center mt-8">
         {captchaError ? (
