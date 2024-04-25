@@ -1,12 +1,15 @@
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PopupAuth } from "../PopupAuth/PopupAuth";
+import { useSendLogoutMutation } from "@/redux/api/authApi";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "@/redux/slices/authSlice";
+
 
 export function LoginButton() {
-  const router = useRouter();
-
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [sendLogout, { isLoading, isSuccess, isError, error }] =
+    useSendLogoutMutation();
+    const isAuthenticated = useSelector(selectCurrentToken) !== null;
   const [popupOpen, setPopupOpen] = useState(false);
 
   const togglePopup = () => {
@@ -28,12 +31,15 @@ export function LoginButton() {
         </button>
       ) : (
         <div>
-          <button className="text-[#480607] font-bold bg-[#FF3333] shadow-buttonRed transition-all duration-200 px-2 hover:bg-[#480607] hover:text-[#FF3333]">
+          <button
+            onClick={sendLogout}
+            className="text-[#480607] font-bold bg-[#FF3333] shadow-buttonRed transition-all duration-200 px-4 py-1 hover:shadow-buttonRedBrick"
+          >
             LOGOUT
           </button>
         </div>
       )}
-      <PopupAuth popupOpen={popupOpen} closePopup={closePopup}/>
+      <PopupAuth popupOpen={popupOpen} closePopup={closePopup} />
     </>
   );
 }

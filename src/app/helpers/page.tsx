@@ -1,25 +1,27 @@
-import { Metadata } from "next";
+import Helpers from "@/components/HelpersPage/Helpers";
 import Layout from "@/components/Layout/Layout";
-import Login from "@/components/LoginPage/Login";
+import { Metadata } from "next";
+import React from "react";
 
 export const metadata: Metadata = {
-  title: "Sign in | Lorenc Base",
+  title: "Helpers | Lorenc Base",
   description: "Database of web development solutions",
   openGraph: {
-    title: "Sign in | Lorenc Base",
+    title: "Helpers | Lorenc Base",
     description: "Database of web development solutions",
-    url: "/login",
+    url: "/helpers",
     siteName: "lorenc-base",
     locale: "en",
     type: "website",
   },
 };
 
-const LoginPage = () => {
+const HelpersPage = () => {
   return (
     <Layout>
-      <Login/>
+      <Helpers />
     </Layout>
   );
 };
-export default LoginPage;
+
+export default HelpersPage;

@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { LoginButton } from "../LoginButton/LoginButton";
 import MobileMenu from "../MobileMenu/MobileMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {FaBars} from "react-icons/fa"
+import { useRefreshMutation } from "@/redux/api/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/redux/slices/authSlice";
+
 
 const headerLinks = [
   {
@@ -12,12 +16,31 @@ const headerLinks = [
   },
   {
     id: 2,
+    title: "Helpers",
+    path: "/helpers",
+  },
+  {
+    id: 3,
     title: "Contacts",
     path: "/contacts",
   },
 ];
 
 export function Header() {
+  const [refresh] = useRefreshMutation();
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    async function ref(){
+      const {accessToken} = await refresh('').unwrap();
+      // dispatch(setCredentials(accessToken));
+      // console.log(accessToken);
+      
+    }
+
+    ref();
+  }, [])
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -61,3 +84,7 @@ export function Header() {
     </header>
   );
 }
+function dispatch(arg0: unknown) {
+  throw new Error("Function not implemented.");
+}
+

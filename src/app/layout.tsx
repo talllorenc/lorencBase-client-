@@ -2,6 +2,8 @@
 
 import { Fira_Mono } from "next/font/google";
 import "./globals.css";
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
 
 const inter = Fira_Mono({
   subsets: ["cyrillic", "latin"],
@@ -15,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Provider store={store}>{children}</Provider>
+      </body>
     </html>
   );
 }

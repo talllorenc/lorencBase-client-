@@ -1,6 +1,6 @@
 "use client";
 
-import { ContactsForm } from "../ContactsForm/ContactsForm";
+import { ContactsForm } from "./ContactsForm";
 
 const Contacts = () => {
   return (

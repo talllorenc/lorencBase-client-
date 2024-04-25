@@ -15,6 +15,11 @@ const headerLinks = [
   },
   {
     id: 2,
+    title: "Helpers",
+    path: "/helpers",
+  },
+  {
+    id: 3,
     title: "Contacts",
     path: "/contacts",
   },

@@ -21,6 +21,56 @@ a {
   color: inherit;
 }
 
+input[type=checkbox] {
+  position: relative;
+  cursor: pointer;
+}
+
+input[type=checkbox]:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 0;
+  left: 0;
+  border: 2px solid #001a2c;
+  border-radius: 3px;
+  background-color: #FAF0E6;
+}
+input[type=checkbox]:checked:after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 15px;
+  border: solid #001a2c;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+input[type='range'] {
+  overflow: hidden;
+  -webkit-appearance: none;
+  background-color: #001a2c;
+  border-radius: 20px;
+  height: 15px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; 
+  height: 15px; 
+  background-color: #FAF0E6; 
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .container{
   max-width: 1280px;
   padding: 0 18px;

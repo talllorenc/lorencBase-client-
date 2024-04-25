@@ -7,6 +7,10 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import Link from "next/link";
 import ErrorMesage from "../ErrorMesage/ErrorMesage";
+import { useLoginMutation } from "@/redux/api/authApi";
+import { setCredentials } from "@/redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+
 
 const basicSchema = yup.object().shape({
   email: yup.string().required("*required").email("*invalid format"),
@@ -15,7 +19,9 @@ const basicSchema = yup.object().shape({
 
 export function LoginForm() {
   const router = useRouter();
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const [errMsg, setErrMsg] = useState("");
+  const [login, { isLoading }] = useLoginMutation()
 
   const {
     values,
@@ -33,11 +39,12 @@ export function LoginForm() {
     validationSchema: basicSchema,
     onSubmit: async (values: ILoginUser) => {
       try {
-        console.log("login");
-        
+        const {accessToken} = await login(values).unwrap();
+        console.log(accessToken);
+        dispatch(setCredentials(accessToken));
         router.push("/");
       } catch (error: any) {
-        setError(error.data.error);
+        setErrMsg(error.data?.message);
       }
     },
   });
@@ -97,7 +104,7 @@ export function LoginForm() {
         )}
       </div>
 
-      <ErrorMesage error={error} />
+      <ErrorMesage error={errMsg} />
 
       <button
         type="submit"
