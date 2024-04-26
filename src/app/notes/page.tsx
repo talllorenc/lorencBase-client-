@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const page = () => {
   return (
     <Layout>
-      <NotesList />
+      <NotesList noteComponent="Note"/>
     </Layout>
   );
 };

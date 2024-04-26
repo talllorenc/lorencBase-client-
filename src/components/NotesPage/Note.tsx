@@ -1,7 +1,5 @@
-import React from "react";
 import { INoteData } from "@/types/NotesData";
 import Link from "next/link";
-import Image from "next/image";
 import { formatDate } from "@/utils/formatDate";
 import { FaEye } from "react-icons/fa";
 
