@@ -11,24 +11,32 @@ import SkeletonDetail from "../SkeletonLoading/SkeletonDetail";
 
 const NoteDetail = () => {
   const { slug } = useParams();
-  console.log(slug);
-  const { data: note, isSuccess, isError, isLoading } = useGetOneBySlugQuery(slug);
+
+  const {
+    data: note,
+    isSuccess,
+    isError,
+    isLoading,
+  } = useGetOneBySlugQuery(slug);
   const createDate = note ? formatDate(note.createdAt) : null;
   const updateDate = note ? formatDate(note.updatedAt) : null;
 
   useEffect(() => {
-    const code = document.querySelector(".detail-note code");
-
+    const code = document.querySelectorAll(".detail-note code");
+    
     if (code) {
-      hljs.highlightElement(code as HTMLElement);
+      code.forEach((block) => {
+        hljs.highlightElement(block as HTMLElement);
+      });
     }
+
   }, [isSuccess]);
 
   return (
     <div className="container py-12 sm:py-16 lg:py-20">
       <div className="mt-8 mx-auto">
         {isLoading ? (
-          <SkeletonDetail/>
+          <SkeletonDetail />
         ) : (
           <div>
             {isError ? (
@@ -92,6 +100,7 @@ const NoteDetail = () => {
                 </div>
               )
             )}
+
           </div>
         )}
       </div>

@@ -20,13 +20,13 @@ const Breadcrumbs = ({}) => {
         {pathNames.length > 0 && <FaAngleRight />}
         {pathNames.map((link, index) => {
           let href = `/${pathNames.slice(0, index + 1).join("/")}`;
-          let itemClasses = paths === href ? "text-[#CCCCFF] font-bold" : "hover:text-[#CCCCFF]";
+          let itemClasses = paths === href ? "text-[#CCCCFF] font-bold max-w-[150px] overflow-hidden truncate" : "hover:text-[#CCCCFF] max-w-[150px] overflow-hidden truncate";
           let itemLink = link[0].toUpperCase() + link.slice(1, link.length);
 
           return (
             <div className="flex items-center" key={index}>
               <li className={itemClasses}>
-                <Link href={href}>{itemLink}</Link>
+                <Link href={href} className="">{itemLink}</Link>
               </li>
               {pathNames.length !== index + 1 && <FaAngleRight />}
             </div>
