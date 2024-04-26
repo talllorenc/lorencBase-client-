@@ -4,12 +4,14 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OutputData } from "@editorjs/editorjs";
+import { useCreateNoteMutation } from "@/redux/slices/notes/notesApislice";
 
 const Editor = dynamic(() => import("@/components/EditorJs/EditorComponent"), {
   ssr: false,
 });
 
 const CreateNoteForm = () => {
+  const [createNote, { isLoading }] = useCreateNoteMutation();
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [tagsInput, setTagsInput] = useState("");
@@ -30,8 +32,16 @@ const CreateNoteForm = () => {
   const handleSubmit = async () => {
     try {
       const tags = tagsInput.split(",").map((tag) => tag.trim());
+      const note = {
+        title,
+        data,
+        tags,
+      };
 
-      // router.push("/");
+      console.log(note);
+      
+      await createNote(note).unwrap();
+      router.push("/notes");
     } catch (error) {
       console.error(error);
     }

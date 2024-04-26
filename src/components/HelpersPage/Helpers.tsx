@@ -14,31 +14,21 @@ const Helpers = () => {
   };
 
   return (
-    <section className="container">
-      <div className="py-12 sm:py-16 lg:py-20">
-        <h1 className="text-center text-6xl font-bold">HELPERS</h1>
-        <div className="mt-8 flex flex-col">
-          <HelpersMenu
-            handleBlockClick={handleBlockClick}
-            selectedBlock={selectedBlock}
-          />
-          <div className="mt-4">
-            {selectedBlock === "RandomPassword" && <RandomPassword />}
-            {selectedBlock === "CryptoRandom" && <CryptoRandom />}
-            {selectedBlock === "RestApi" && <RestApi />}
-          </div>
+    <div className="container py-12 sm:py-16 lg:py-20">
+      <h1 className="text-center text-6xl font-bold">HELPERS</h1>
+      <div className="mt-8 flex flex-col">
+        <HelpersMenu
+          handleBlockClick={handleBlockClick}
+          selectedBlock={selectedBlock}
+        />
+        <div className="mt-4">
+          {selectedBlock === "RandomPassword" && <RandomPassword />}
+          {selectedBlock === "CryptoRandom" && <CryptoRandom />}
+          {selectedBlock === "RestApi" && <RestApi />}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
 export default Helpers;
-
-
-
-
-
-
-
-

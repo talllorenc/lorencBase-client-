@@ -1,15 +1,10 @@
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PopupAuth } from "../PopupAuth/PopupAuth";
-import { useSendLogoutMutation } from "@/redux/api/authApi";
-import { useSelector } from "react-redux";
-import { selectCurrentToken } from "@/redux/slices/authSlice";
-
+import { useProfileQuery } from "@/redux/slices/users/usersApiSlice";
+import Link from "next/link";
 
 export function LoginButton() {
-  const [sendLogout, { isLoading, isSuccess, isError, error }] =
-    useSendLogoutMutation();
-    const isAuthenticated = useSelector(selectCurrentToken) !== null;
+  const { data: user, isLoading, isError, isSuccess } = useProfileQuery('');
   const [popupOpen, setPopupOpen] = useState(false);
 
   const togglePopup = () => {
@@ -22,7 +17,7 @@ export function LoginButton() {
 
   return (
     <>
-      {!isAuthenticated ? (
+      {!isSuccess ? (
         <button
           onClick={togglePopup}
           className="bg-[#FAF0E6] text-black shadow-buttonMain transition-all duration-200 px-4 py-1 font-bold hover:shadow-buttonMainBrick"
@@ -31,12 +26,9 @@ export function LoginButton() {
         </button>
       ) : (
         <div>
-          <button
-            onClick={sendLogout}
-            className="text-[#480607] font-bold bg-[#FF3333] shadow-buttonRed transition-all duration-200 px-4 py-1 hover:shadow-buttonRedBrick"
-          >
-            LOGOUT
-          </button>
+          <Link href="/profile" className="text-[#480607] uppercase font-bold bg-[#FF3333] shadow-buttonRed transition-all duration-200 px-4 py-1 hover:shadow-buttonRedBrick">
+            {user?.name}
+          </Link>
         </div>
       )}
       <PopupAuth popupOpen={popupOpen} closePopup={closePopup} />

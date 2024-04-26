@@ -1,5 +1,7 @@
 "use client";
 
+import { useLoginMutation } from "@/redux/slices/auth/authApiSlice";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ILoginUser } from "@/types/AuthFormData";
@@ -7,10 +9,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import Link from "next/link";
 import ErrorMesage from "../ErrorMesage/ErrorMesage";
-import { useLoginMutation } from "@/redux/api/authApi";
-import { setCredentials } from "@/redux/slices/authSlice";
-import { useDispatch } from "react-redux";
-
+import { setCredentials } from "@/redux/slices/auth/authSlice";
 
 const basicSchema = yup.object().shape({
   email: yup.string().required("*required").email("*invalid format"),
@@ -18,10 +17,10 @@ const basicSchema = yup.object().shape({
 });
 
 export function LoginForm() {
-  const router = useRouter();
   const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+  const router = useRouter();
   const [errMsg, setErrMsg] = useState("");
-  const [login, { isLoading }] = useLoginMutation()
 
   const {
     values,
@@ -39,10 +38,9 @@ export function LoginForm() {
     validationSchema: basicSchema,
     onSubmit: async (values: ILoginUser) => {
       try {
-        const {accessToken} = await login(values).unwrap();
-        console.log(accessToken);
-        dispatch(setCredentials(accessToken));
-        router.push("/");
+        const userData = await login(values).unwrap();
+        dispatch(setCredentials({ ...userData }));
+        router.refresh();
       } catch (error: any) {
         setErrMsg(error.data?.message);
       }
@@ -110,7 +108,7 @@ export function LoginForm() {
         type="submit"
         className="w-full mt-8 text-lg bg-[#001a2c] text-[#FAF0E6] p-2 transition-all duration-200 cursor-pointer font-bold hover:shadow-buttonMainDarkBrick"
       >
-        Enter
+        {isLoading ? "Loading..." : "Login"}
       </button>
       <div className="flex items-center justify-center">
         <Link
