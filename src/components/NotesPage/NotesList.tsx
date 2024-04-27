@@ -34,7 +34,7 @@ const NotesList = ({ noteComponent }: INoteList) => {
               <ErrorMesage error="Notes not found" />
             ) : (
               isSuccess && (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-8">
                   {NoteComponent &&
                     notes.map((note: INoteData) => (
                       <NoteComponent key={note._id} note={note}/>

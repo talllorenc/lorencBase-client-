@@ -14,6 +14,7 @@ const CreateNoteForm = () => {
   const [createNote, { isLoading }] = useCreateNoteMutation();
   const router = useRouter();
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [tagsInput, setTagsInput] = useState("");
   const [data, setData] = useState<OutputData>();
 
@@ -25,6 +26,10 @@ const CreateNoteForm = () => {
     setTitle(e.target.value);
   };
 
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  };
+
   const handleTagsInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTagsInput(e.target.value);
   };
@@ -34,12 +39,13 @@ const CreateNoteForm = () => {
       const tags = tagsInput.split(",").map((tag) => tag.trim());
       const note = {
         title,
+        description,
         data,
         tags,
       };
 
       console.log(note);
-      
+
       await createNote(note).unwrap();
       router.push("/notes");
     } catch (error) {
@@ -62,11 +68,33 @@ const CreateNoteForm = () => {
         </div>
       </div>
 
-      <Editor
-        data={data}
-        onChange={handleDataChange}
-        holder="editor-container"
-      />
+      <div className="relative">
+        <input
+          type="text"
+          value={description}
+          onChange={handleDescriptionChange}
+          placeholder="Description"
+          className="border-2 border-[#FAF0E6] w-full outline-none px-2 p-2 bg-transparent"
+        />
+        <div className="flex items-center gap-2">
+          <p className="text-[#FF3333] text-xl">*</p>
+          <p className="font-bold">Required field</p>
+        </div>
+      </div>
+      
+      <div>
+        <Editor
+          data={data}
+          onChange={handleDataChange}
+          holder="editor-container"
+        />
+
+        <div className="flex items-center gap-2">
+          <p className="text-[#FF3333] text-xl">*</p>
+          <p className="font-bold">Required field</p>
+        </div>
+      </div>
+
       <div className="relative">
         <input
           type="text"
@@ -75,6 +103,11 @@ const CreateNoteForm = () => {
           placeholder="Tags (comma separated)"
           className="border-2 border-[#FAF0E6] w-full outline-none px-2 p-2 bg-transparent"
         />
+
+        <div className="flex items-center gap-2">
+          <p className="text-[#FF3333] text-xl">*</p>
+          <p className="font-bold">Required field</p>
+        </div>
       </div>
 
       <button

@@ -19,7 +19,26 @@ export const notesApiSlice = api.injectEndpoints({
         body: { ...data },
       }),
     }),
+    likeNote: builder.mutation({
+      query: (slug) => ({
+        url: `/notes/${slug}/like`,
+        method: "PATCH",
+      }),
+    }),
+
+    unlikeNote: builder.mutation({
+      query: (slug) => ({
+        url: `/notes/${slug}/unlike`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllQuery, useGetOneBySlugQuery, useCreateNoteMutation } = notesApiSlice;
+export const {
+  useGetAllQuery,
+  useGetOneBySlugQuery,
+  useCreateNoteMutation,
+  useLikeNoteMutation,
+  useUnlikeNoteMutation,
+} = notesApiSlice;

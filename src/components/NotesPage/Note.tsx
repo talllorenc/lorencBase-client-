@@ -13,7 +13,11 @@ const Note = ({ note }: PropsType) => {
   return (
     <Link href={`/notes/${note.slug}`} className="w-full">
       <div className="shadow-buttonMain rounded transition-all duration-200 cursor-pointer hover:shadow-buttonMainBrick flex flex-col gap-1  p-2">
-        <h2 className="font-bold text-lg">{note.title}</h2>
+        
+        <div className="flex flex-col">
+          <h2 className="font-bold text-lg">{note.title}</h2>
+          <span>{note.description}</span>
+        </div>
 
         <div className="flex justify-between w-full">
           <div className="flex items-center gap-1">
@@ -22,7 +26,10 @@ const Note = ({ note }: PropsType) => {
 
             <ul className="flex text-xs text-black ml-2 gap-2">
               {note.tags.map((tag) => (
-                <li key={tag} className="border text-blue-500 rounded px-1 bg-[#F8F4FF]">
+                <li
+                  key={tag}
+                  className="border text-blue-500 rounded px-1 bg-[#F8F4FF]"
+                >
                   {tag}
                 </li>
               ))}

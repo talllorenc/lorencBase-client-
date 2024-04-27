@@ -6,6 +6,7 @@ import { FaEye, FaHeart, FaRegHeart } from "react-icons/fa";
 import { useEffect } from "react";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
+import LikesButton from "@/components/LikesButton/LikesButton";
 
 type PropsType = {
   note: INoteData;
@@ -13,7 +14,7 @@ type PropsType = {
 
 const HPNote = ({ note }: PropsType) => {
   return (
-    <div className="shadow-buttonMain max-w-2xl mx-auto rounded bg-[#F8F8FF] text-[#001a2c] transition-all duration-200 p-4 flex flex-col gap-2 hover:shadow-buttonMainBrick">
+    <div className="shadow-buttonMain max-w-2xl w-full mx-auto rounded transition-all duration-200 p-4 flex flex-col gap-2 hover:shadow-buttonMainBrick">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
@@ -35,12 +36,16 @@ const HPNote = ({ note }: PropsType) => {
         </div>
       </div>
 
-      <Link
-        href={`/notes/${note.slug}`}
-        className="font-bold text-lg mr-auto hover:underline"
-      >
-        {note.title}
-      </Link>
+      <div className="flex flex-col">
+        <Link
+          href={`/notes/${note.slug}`}
+          className="font-bold text-xl mr-auto hover:underline"
+        >
+          {note.title}
+        </Link>
+
+        <span>{note.description}</span>
+      </div>
 
       <div className="flex items-center justify-between">
         <ul className="flex text-xs text-black gap-4">
@@ -54,13 +59,7 @@ const HPNote = ({ note }: PropsType) => {
           ))}
         </ul>
 
-        <div className="flex items-center gap-1">
-          <button>
-            <FaRegHeart className="text-[#f33] hover:scale-110"/>
-          </button>
-          <p className="">24</p>
-        </div>
-        
+        <LikesButton likes={note.likes.length} slug={note.slug} id={note._id} />
       </div>
     </div>
   );
