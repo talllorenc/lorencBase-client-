@@ -1,3 +1,5 @@
+"use client";
+
 import CreateNoteForm from "./CreateNoteForm";
 
 const CreateNote = () => {

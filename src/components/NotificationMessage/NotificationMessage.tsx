@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 interface INotificationMessage {
@@ -27,8 +27,7 @@ const NotificationMessage = ({ message }: INotificationMessage) => {
       transition={{ duration: 0.5 }}
       className="fixed max-w-[270px] uppercase font-bold text-center text-[16px] w-full bottom-10 right-10 text-green-500 bg-green-950 p-4 shadow-buttonGreenBrick"
     >
-      {/* {message} */}
-      Note added to favorites
+      {message}
     </motion.div>
   ) : null;
 };
