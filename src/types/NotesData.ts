@@ -6,8 +6,10 @@ export interface INoteData {
   tags: string[];
   viewsCount: number;
   slug: string;
+  createdBy: string;
   likes: string[];
   likedPosts: string[];
+  favoriteNotes: string[];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -7,20 +7,17 @@ import {
   useLikeNoteMutation,
   useUnlikeNoteMutation,
 } from "@/redux/slices/notes/notesApislice";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "@/redux/slices/auth/authSlice";
-import { RootState } from "@/redux/store";
+import useUserProfile from "@/hooks/userProfile";
+import { INoteData } from "@/types/NotesData";
 
 interface ILikesButtonProps {
-  likes: number;
-  slug: string;
-  id: string;
+  note: INoteData;
 }
 
-const LikesButton = ({ likes, slug, id }: ILikesButtonProps) => {
-  const currentUser = useSelector(selectCurrentUser);
-  const isLiked = currentUser && currentUser.likedPosts.includes(id);
-  const [likesCount, setLikesCount] = useState<number>(likes);
+const LikesButton = ({ note }: ILikesButtonProps) => {
+  const userProfile = useUserProfile();
+  const isLiked = userProfile && userProfile.likedNotes.includes(note._id);
+  const [likesCount, setLikesCount] = useState<number>(note.likes.length);
   const [likeStatus, setLikeStatus] = useState<boolean>(false);
 
   useEffect(() => {
@@ -28,23 +25,24 @@ const LikesButton = ({ likes, slug, id }: ILikesButtonProps) => {
       setLikeStatus(isLiked);
     }
   }, [isLiked]);
+
   const [likeNote, { isLoading: likeLoading }] = useLikeNoteMutation();
   const [unlikeNote, { isLoading: unlikeLoading }] = useUnlikeNoteMutation();
 
   const handleLikeButtonClick = async () => {
     if (likeStatus) {
-      await unlikeNote(slug);
+      await unlikeNote(note._id);
       setLikesCount((prevLikesCount) => prevLikesCount - 1);
       setLikeStatus(false);
     } else {
-      await likeNote(slug);
+      await likeNote(note._id);
       setLikesCount((prevLikesCount) => prevLikesCount + 1);
       setLikeStatus(true);
     }
   };
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 text-xl">
       <button
         onClick={handleLikeButtonClick}
         disabled={likeLoading || unlikeLoading}
@@ -52,10 +50,7 @@ const LikesButton = ({ likes, slug, id }: ILikesButtonProps) => {
         {likeStatus ? (
           <FaHeart className="text-[#f33] hover:scale-110" />
         ) : (
-          <motion.div
-            whileHover={{ scale: 1.1 }} 
-            whileTap={{ scale: 2.5 }} 
-          >
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 2.5 }}>
             <FaRegHeart className="text-[#f33]" />
           </motion.div>
         )}

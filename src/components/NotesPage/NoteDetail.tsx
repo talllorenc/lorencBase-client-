@@ -8,6 +8,9 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import SkeletonDetail from "../SkeletonLoading/SkeletonDetail";
+import DeleteNoteButton from "../DeleteNoteButton/DeleteNoteButton";
+import LikesButton from "../LikesButton/LikesButton";
+import FavoritesButton from "../FavoritesButton/FavoritesButton";
 
 const NoteDetail = () => {
   const { slug } = useParams();
@@ -23,13 +26,12 @@ const NoteDetail = () => {
 
   useEffect(() => {
     const code = document.querySelectorAll(".detail-note code");
-    
+
     if (code) {
       code.forEach((block) => {
         hljs.highlightElement(block as HTMLElement);
       });
     }
-
   }, [isSuccess]);
 
   return (
@@ -47,32 +49,40 @@ const NoteDetail = () => {
                   <div className="flex flex-col gap-2 border-b-2 border-[#FAF0E6]">
                     <h1 className="font-bold text-2xl">{note.title}</h1>
                     <Breadcrumbs />
-                    <div className="flex gap-8 py-4">
-                      <div className="flex flex-col">
-                        <p className="text-xs text-blue-500 font-medium">
-                          viewed
-                        </p>
-                        <p className="text-[#9c9b9b] font-medium">
-                          {note.viewsCount}
-                        </p>
+                    <div className="flex flex-wrap items-center justify-between py-4">
+                      <div className="flex gap-8">
+                        <div className="flex flex-col">
+                          <p className="text-xs text-blue-500 font-medium">
+                            viewed
+                          </p>
+                          <p className="text-[#9c9b9b] font-medium">
+                            {note.viewsCount}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col">
+                          <p className="text-xs text-green-500 font-medium">
+                            create
+                          </p>
+                          <p className="text-[#9c9b9b] font-medium">
+                            {createDate}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col">
+                          <p className="text-xs text-yellow-500 font-medium">
+                            update
+                          </p>
+                          <p className="text-[#9c9b9b] font-medium">
+                            {updateDate}
+                          </p>
+                        </div>
                       </div>
 
-                      <div className="flex flex-col">
-                        <p className="text-xs text-green-500 font-medium">
-                          create
-                        </p>
-                        <p className="text-[#9c9b9b] font-medium">
-                          {createDate}
-                        </p>
-                      </div>
-
-                      <div className="flex flex-col">
-                        <p className="text-xs text-yellow-500 font-medium">
-                          update
-                        </p>
-                        <p className="text-[#9c9b9b] font-medium">
-                          {updateDate}
-                        </p>
+                      <div className="flex items-center gap-4 mt-8 sm:mt-0">
+                        <LikesButton note={note} />
+                        <FavoritesButton note={note} />
+                        <DeleteNoteButton note={note} />
                       </div>
                     </div>
                   </div>
@@ -100,7 +110,6 @@ const NoteDetail = () => {
                 </div>
               )
             )}
-
           </div>
         )}
       </div>

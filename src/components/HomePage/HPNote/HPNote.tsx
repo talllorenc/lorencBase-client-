@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import LikesButton from "@/components/LikesButton/LikesButton";
+import DeleteNoteButton from "@/components/DeleteNoteButton/DeleteNoteButton";
 
 type PropsType = {
   note: INoteData;
@@ -30,7 +31,7 @@ const HPNote = ({ note }: PropsType) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 text-xl">
           <FaEye />
           <p>{note.viewsCount}</p>
         </div>
@@ -59,7 +60,7 @@ const HPNote = ({ note }: PropsType) => {
           ))}
         </ul>
 
-        <LikesButton likes={note.likes.length} slug={note.slug} id={note._id} />
+        <LikesButton note={note} />
       </div>
     </div>
   );

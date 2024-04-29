@@ -15,7 +15,7 @@ export interface IUser {
   name: string;
   email: string;
   role: string;
-  passwordHash: string;
+  likedPosts: string[];
   createdAt: Date;
   updatedAt: Date;
 }
