@@ -5,6 +5,7 @@ export const usersApiSlice = api.injectEndpoints({
     profile: builder.query({
       query: () => ({
         url: "/users/profile",
+        
       }),
     }),
   }),

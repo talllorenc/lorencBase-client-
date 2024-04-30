@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export function LoginButton() {
   const { data: user, isLoading, isError, isSuccess } = useProfileQuery('');
+  
   const [popupOpen, setPopupOpen] = useState(false);
 
   const togglePopup = () => {

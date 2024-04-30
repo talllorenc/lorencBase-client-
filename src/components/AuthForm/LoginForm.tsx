@@ -40,7 +40,7 @@ export function LoginForm() {
       try {
         const userData = await login(values).unwrap();
         dispatch(setCredentials({ ...userData }));
-        router.refresh();
+        window.location.href = "/";
       } catch (error: any) {
         setErrMsg(error.data?.message);
       }

@@ -19,3 +19,10 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ITokenInside {
+  id: number;
+  role: string;
+  iat: number;
+  exp: number;
+}
