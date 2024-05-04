@@ -22,7 +22,7 @@ const NotesList = ({ noteComponent }: INoteList) => {
 
   const NoteComponent = noteComponent === "HPNote" ? HPNote : Note;
 
-  const handleFilter = (value) => {
+  const handleFilter = (value: object) => {
     setFilter((prevFilter) => ({
       ...prevFilter,
       ...value,
