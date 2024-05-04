@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LoginButton } from "../LoginButton/LoginButton";
+import { LoginButton } from "../Buttons/LoginButton/LoginButton";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import { useState } from "react";
 import {FaBars} from "react-icons/fa"

@@ -1,6 +1,6 @@
 "use client";
 
-import CopyToClipboardButton from "@/components/CopyToClipboardButton/CopyToClipboardButton";
+import CopyToClipboardButton from "@/components/Buttons/CopyToClipboardButton/CopyToClipboardButton";
 import { useState } from "react";
 const RandomPassword = () => {
   const [password, setPassword] = useState("");

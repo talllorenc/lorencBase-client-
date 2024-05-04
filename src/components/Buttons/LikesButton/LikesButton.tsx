@@ -7,15 +7,18 @@ import {
   useLikeNoteMutation,
   useUnlikeNoteMutation,
 } from "@/redux/slices/notes/notesApislice";
-import useUserProfile from "@/hooks/userProfile";
+// import useUserProfile from "@/hooks/userProfile";
 import { INoteData } from "@/types/NotesData";
+import { selectCurrentUser } from "@/redux/slices/auth/authSlice";
+import { useSelector } from "react-redux";
 
 interface ILikesButtonProps {
   note: INoteData;
 }
 
 const LikesButton = ({ note }: ILikesButtonProps) => {
-  const userProfile = useUserProfile();
+  // const userProfile = useUserProfile();
+  const userProfile = useSelector(selectCurrentUser);
   const isLiked = userProfile && userProfile.likedNotes.includes(note._id);
   const [likesCount, setLikesCount] = useState<number>(note.likes.length);
   const [likeStatus, setLikeStatus] = useState<boolean>(false);

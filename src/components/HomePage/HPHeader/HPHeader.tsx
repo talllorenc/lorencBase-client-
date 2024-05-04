@@ -26,7 +26,7 @@ const HPHeader = () => {
           className="absolute top-0 left-0 w-full h-full object-cover blur-md"
         />
 
-        {/* <div className="absolute -bottom-28 left-1/2 -translate-x-1/2 flex items-center gap-4 flex-col w-full">
+        <div className="absolute top-1/2 left-0 flex items-center gap-4 flex-col w-full">
           <Image
             src="/header/main_logo.png"
             width={100}
@@ -37,13 +37,13 @@ const HPHeader = () => {
           />
           <div className="flex flex-col items-center">
             <p className="text-2xl font-bold">LORENC BASE</p>
-            <div className="flex items-center gap-4 text-[#ada7a0] ">
+            {/* <div className="flex items-center gap-4 text-[#ada7a0] ">
               <p className="">Notes count: 158</p>
               <p className="text-xs">●</p>
               <p className="">Users: 11</p>
-            </div>
+            </div> */}
           </div>
-        </div> */}
+        </div>
       </div>
       <PopupHPHeader popupOpen={popupOpen} closePopup={closePopup} />
     </div>

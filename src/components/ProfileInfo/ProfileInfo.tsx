@@ -1,6 +1,6 @@
 "use client";
 
-import LogoutButton from "../LogoutButton/LogoutButton";
+import LogoutButton from "../Buttons/LogoutButton/LogoutButton";
 
 export function ProfileInfo() {
 

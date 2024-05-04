@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import CopyToClipboardButton from "@/components/CopyToClipboardButton/CopyToClipboardButton";
+import CopyToClipboardButton from "@/components/Buttons/CopyToClipboardButton/CopyToClipboardButton";
 import crypto from "crypto";
 
 const CryptoRandom = () => {

@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import Link from "next/link";
 import ErrorMesage from "../ErrorMesage/ErrorMesage";
+import { saveTokenStorage } from "@/utils/setTokens";
 import { setCredentials } from "@/redux/slices/auth/authSlice";
 
 const basicSchema = yup.object().shape({
@@ -39,8 +40,9 @@ export function LoginForm() {
     onSubmit: async (values: ILoginUser) => {
       try {
         const userData = await login(values).unwrap();
+        saveTokenStorage({ ...userData });
         dispatch(setCredentials({ ...userData }));
-        window.location.href = "/";
+        router.push("/");
       } catch (error: any) {
         setErrMsg(error.data?.message);
       }
@@ -55,10 +57,10 @@ export function LoginForm() {
           type="email"
           placeholder="email"
           autoComplete="off"
-          className={`w-full outline-none px-2 p-2 bg-transparent text-[#001a2c] ${
+          className={`w-full outline-none px-2 p-2 bg-transparent ${
             errors.email && touched.email
               ? "border-2 border-[#FF3333]"
-              : "border-2 border-[#001a2c]"
+              : "border-2 border-[#FAF0E6]"
           }`}
           onBlur={handleBlur}
           value={values.email}
@@ -66,7 +68,7 @@ export function LoginForm() {
         />
         <div className="flex items-center gap-2">
           <p className="text-[#FF3333] text-xl">*</p>
-          <p className="font-bold text-[#001a2c]">Required field</p>
+          <p className="font-bold text-[#FAF0E6]">Required field</p>
         </div>
 
         {errors.email && touched.email && (
@@ -81,10 +83,10 @@ export function LoginForm() {
           id="password"
           type="password"
           placeholder="password"
-          className={`w-full outline-none px-2 p-2 bg-transparent text-[#001a2c] ${
+          className={`w-full outline-none px-2 p-2 bg-transparent ${
             errors.password && touched.password
               ? "border-2 border-[#FF3333]"
-              : "border-2 border-[#001a2c]"
+              : "border-2 border-[#FAF0E6]"
           }`}
           onBlur={handleBlur}
           value={values.password}
@@ -92,7 +94,7 @@ export function LoginForm() {
         />
         <div className="flex items-center gap-2">
           <p className="text-[#FF3333] text-xl">*</p>
-          <p className="font-bold text-[#001a2c]">Required field</p>
+          <p className="font-bold text-[#FAF0E6]">Required field</p>
         </div>
 
         {errors.password && touched.password && (
@@ -106,14 +108,14 @@ export function LoginForm() {
 
       <button
         type="submit"
-        className="w-full mt-8 text-lg bg-[#001a2c] text-[#FAF0E6] p-2 transition-all duration-200 cursor-pointer font-bold hover:shadow-buttonMainDarkBrick"
+        className="w-full mt-8 text-lg bg-[#FAF0E6] text-[#001a2c] p-2 transition-all duration-200 cursor-pointer font-bold hover:shadow-buttonMainBrick"
       >
         {isLoading ? "Loading..." : "Login"}
       </button>
       <div className="flex items-center justify-center">
         <Link
           href="/register"
-          className="text-lg text-[#001a2c] font-bold transition-all duration-200 underline hover:scale-110"
+          className="text-lg font-bold transition-all duration-200 underline hover:scale-110"
         >
           JOIN THE PORTAL
         </Link>

@@ -6,19 +6,22 @@ import {
 } from "@/redux/slices/notes/notesApislice";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import useUserProfile from "@/hooks/userProfile";
+import { selectCurrentUser } from "@/redux/slices/auth/authSlice";
+import { useSelector } from "react-redux";
 
 import { useEffect, useState } from "react";
-import NotificationMessage from "../NotificationMessage/NotificationMessage";
+import NotificationMessage from "../../NotificationMessage/NotificationMessage";
 
 interface IFavoritesButtonProps {
   note: INoteData;
 }
 const FavoritesButton = ({ note }: IFavoritesButtonProps) => {
-  const userProfile = useUserProfile();
+  // const userProfile = useUserProfile();
+  const userProfile = useSelector(selectCurrentUser);
   const isFavorite =
     userProfile && userProfile.favoriteNotes.includes(note._id);
   const [favoriteStatus, setFavoriteStatus] = useState<boolean>(false);
-  const [notificationMessage, setNotificationMessage] = useState<string>('')
+  const [notificationMessage, setNotificationMessage] = useState<string>("");
 
   useEffect(() => {
     if (isFavorite !== null) {
@@ -27,7 +30,8 @@ const FavoritesButton = ({ note }: IFavoritesButtonProps) => {
   }, [isFavorite]);
 
   const [addToFavorites, { isLoading, isSuccess }] = useFavoriteAddMutation();
-  const [removeFromFavorites, { isLoading: removeLoading }] = useFavoriteRemoveMutation();
+  const [removeFromFavorites, { isLoading: removeLoading }] =
+    useFavoriteRemoveMutation();
 
   const handleFavorite = async () => {
     if (favoriteStatus) {
@@ -36,16 +40,13 @@ const FavoritesButton = ({ note }: IFavoritesButtonProps) => {
     } else {
       await addToFavorites(note._id);
       setFavoriteStatus(true);
-      setNotificationMessage('Note added to favorites')
+      setNotificationMessage("Note added to favorites");
     }
   };
 
   return (
     <div className="text-orange-500 text-xl flex items-center">
-      <button
-        onClick={handleFavorite}
-        disabled={isLoading || removeLoading}
-      >
+      <button onClick={handleFavorite} disabled={isLoading || removeLoading}>
         {favoriteStatus ? (
           <FaBookmark className="hover:scale-110" />
         ) : (
@@ -54,7 +55,7 @@ const FavoritesButton = ({ note }: IFavoritesButtonProps) => {
           </motion.div>
         )}
       </button>
-      <NotificationMessage message={notificationMessage}/>
+      <NotificationMessage message={notificationMessage} />
     </div>
   );
 };

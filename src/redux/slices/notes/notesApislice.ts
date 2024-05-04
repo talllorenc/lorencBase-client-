@@ -3,8 +3,10 @@ import { api } from "@/app/api/api";
 export const notesApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getAll: builder.query({
-      query: () => ({
+      query: (filter) => ({
         url: "/notes",
+        method: "GET",
+        params: filter,
       }),
     }),
     getOneBySlug: builder.query({

@@ -1,29 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface IUser {
+  [x: string]: any;
+  _id: string;
+  likedNotes: any;
+  name: string;
+  email: string;
+  role: string;
+}
+
 interface IAuthInitialState {
-  token: string | null;
+  user: IUser | null;
 }
 
 const initialState: IAuthInitialState = {
-  token: null,
-}
+  user: null,
+};
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state, action) => {
-      const { accessToken } = action.payload;
-      state.token = accessToken;
-    }
+    setCredentials(state, action) {
+      const { user } = action.payload;
+      state.user = user;
+    },
+    clearCredentials(state) {
+      state.user = null;
+    },
   },
 });
 
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, clearCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const selectCurrentToken = (state : { auth: IAuthInitialState }) => state.auth.token;
-
-
-
+export const selectCurrentUser = (state: { auth: IAuthInitialState }) => state.auth.user;

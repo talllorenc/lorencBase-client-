@@ -1,4 +1,4 @@
-import Helpers from "@/components/HelpersPage/Helpers";
+import Helpers from "@/components/Pages/HelpersPage/Helpers";
 import Layout from "@/components/Layout/Layout";
 import { Metadata } from "next";
 import React from "react";

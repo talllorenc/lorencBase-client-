@@ -6,13 +6,17 @@ import {
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 import { setCredentials } from "@/redux/slices/auth/authSlice";
-import { RootState } from "@/redux/store";
+import {
+  saveTokenStorage,
+  removeFromStorage,
+  getAccessToken,
+} from "@/utils/setTokens";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:8080/api/",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+    const token = getAccessToken();
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
@@ -27,17 +31,14 @@ const baseQueryWithReauth = async (
 ) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 403) {
-    // console.log("sending refresh token");
     const refreshResult = await baseQuery("/auth/refresh", api, extraOptions);
 
     if (refreshResult?.data) {
-      api.dispatch(setCredentials({ ...refreshResult.data }));
+      saveTokenStorage(refreshResult.data as string);
+      api.dispatch(setCredentials({...refreshResult.data}));
       result = await baseQuery(args, api, extraOptions);
     } else {
-      if (refreshResult?.error?.status === 403) {
-        console.log("Your login has expired.");
-      }
-      return refreshResult;
+      removeFromStorage();
     }
   }
   return result;
@@ -48,6 +49,4 @@ export const api = createApi({
   endpoints: (builder) => ({}),
 });
 
-export const isFetchBaseQueryErrorType = (
-  error: any
-): error is FetchBaseQueryError => "status" in error;
+

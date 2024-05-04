@@ -14,8 +14,14 @@ export const authApiSlice = api.injectEndpoints({
         url: "/auth/logout",
         method: "POST",
       }),
-    })
+    }),
+    refresh: builder.query({
+      query: () => ({
+        url: "/auth/refresh",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation } = authApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRefreshQuery } = authApiSlice;

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LoginButton } from "../LoginButton/LoginButton";
+import { LoginButton } from "../Buttons/LoginButton/LoginButton";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface IPopupAuthProps {

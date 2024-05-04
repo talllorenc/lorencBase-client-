@@ -16,6 +16,7 @@ const CreateNoteForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tagsInput, setTagsInput] = useState("");
+  const [category, setCategoryInput] = useState("");
   const [data, setData] = useState<OutputData>();
 
   const handleDataChange = (newData: OutputData) => {
@@ -34,6 +35,10 @@ const CreateNoteForm = () => {
     setTagsInput(e.target.value);
   };
 
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryInput(e.target.value);
+  };
+
   const handleSubmit = async () => {
     try {
       const tags = tagsInput.split(",").map((tag) => tag.trim());
@@ -41,6 +46,7 @@ const CreateNoteForm = () => {
         title,
         description,
         data,
+        category,
         tags,
       };
 
@@ -81,13 +87,27 @@ const CreateNoteForm = () => {
           <p className="font-bold">Required field</p>
         </div>
       </div>
-      
+
       <div>
         <Editor
           data={data}
           onChange={handleDataChange}
           holder="editor-container"
         />
+
+        <div className="flex items-center gap-2">
+          <p className="text-[#FF3333] text-xl">*</p>
+          <p className="font-bold">Required field</p>
+        </div>
+      </div>
+
+      <div className="relative">
+        <select name="" id="" onChange={handleCategoryChange}>
+          <option value="">Choose category</option>
+          <option value="backend">Backend</option>
+          <option value="frontend">Frontend</option>
+          <option value="fullstack">Fullstack</option>
+        </select>
 
         <div className="flex items-center gap-2">
           <p className="text-[#FF3333] text-xl">*</p>

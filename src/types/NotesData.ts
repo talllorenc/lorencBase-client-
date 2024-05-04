@@ -8,7 +8,8 @@ export interface INoteData {
   slug: string;
   createdBy: string;
   likes: string[];
-  likedPosts: string[];
+  likedNotes: string[];
+  category: string;
   favoriteNotes: string[];
   createdAt: Date;
   updatedAt: Date;

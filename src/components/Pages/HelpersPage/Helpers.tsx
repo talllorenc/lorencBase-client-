@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import HelpersMenu from "../HelpersMenu/HelpersMenu";
-import RandomPassword from "../HeplersTools/RandomPassword/RandomPassword";
-import CryptoRandom from "../HeplersTools/CryptoRandom/CryptoRandom";
-import RestApi from "../HeplersTools/RestApi/RestApi";
+import HelpersMenu from "../../HelpersMenu/HelpersMenu";
+import RandomPassword from "../../HeplersTools/RandomPassword/RandomPassword";
+import CryptoRandom from "../../HeplersTools/CryptoRandom/CryptoRandom";
+import RestApi from "../../HeplersTools/RestApi/RestApi";
 
 const Helpers = () => {
   

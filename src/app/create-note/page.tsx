@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Layout from "@/components/Layout/Layout";
-import CreateNote from "@/components/CreateNotePage/CreateNote";
+import CreateNote from "@/components/Pages/CreateNotePage/CreateNote";
 
 export const metadata: Metadata = {
   title: "Create note | Lorenc Base",

@@ -3,17 +3,17 @@ import { useRouter } from "next/navigation";
 
 const LogoutButton = () => {
   const router = useRouter();
-  const [logout] = useLogoutMutation();
+  const [logout, { isLoading, isSuccess }] = useLogoutMutation();
 
   return (
     <button
       className="bg-[#FF3333] font-bold px-4 py-1 transition-all duration-200 cursor-pointer shadow-buttonRed hover:shadow-buttonRedBrick"
       onClick={() => {
         logout({});
-        window.location.href = "/";
+        router.push("/");
       }}
     >
-      LogoutButton
+      {isLoading ? "Loading..." : "Logout"}
     </button>
   );
 };

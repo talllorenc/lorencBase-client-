@@ -1,25 +1,26 @@
 import { Metadata } from "next";
 import Layout from "@/components/Layout/Layout";
-import Contacts from "@/components/Pages/ContactsPage/Contacts";
+import Register from "@/components/Pages/RegisrerPage/Regisrer";
 
 export const metadata: Metadata = {
-  title: "Contacts | Lorenc Base",
+  title: "Sign up | Lorenc Base",
   description: "Database of web development solutions",
   openGraph: {
-    title: "Contacts | Lorenc Base",
+    title: "Sign up | Lorenc Base",
     description: "Database of web development solutions",
-    url: "/contacts",
+    url: "/register",
     siteName: "lorenc-base",
     locale: "en",
     type: "website",
   },
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <Layout>
-        <Contacts/>
+      <Register/>
     </Layout>
   );
 };
-export default LoginPage;
+
+export default RegisterPage;

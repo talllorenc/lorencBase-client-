@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Layout from "@/components/Layout/Layout";
-import Profile from "@/components/ProfilePage/Profile";
+import Profile from "@/components/Pages/ProfilePage/Profile";
 
 export const metadata: Metadata = {
   title: "Profile | Lorenc Base",

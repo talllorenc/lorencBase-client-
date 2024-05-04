@@ -6,11 +6,12 @@ import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
-import SkeletonDetail from "../SkeletonLoading/SkeletonDetail";
-import DeleteNoteButton from "../DeleteNoteButton/DeleteNoteButton";
-import LikesButton from "../LikesButton/LikesButton";
-import FavoritesButton from "../FavoritesButton/FavoritesButton";
+import Breadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import SkeletonDetail from "../../SkeletonLoading/SkeletonDetail";
+import DeleteNoteButton from "../../Buttons/DeleteNoteButton/DeleteNoteButton";
+import LikesButton from "../../Buttons/LikesButton/LikesButton";
+import FavoritesButton from "../../Buttons/FavoritesButton/FavoritesButton";
+import React from "react";
 
 const NoteDetail = () => {
   const { slug } = useParams();
@@ -23,13 +24,33 @@ const NoteDetail = () => {
   } = useGetOneBySlugQuery(slug);
   const createDate = note ? formatDate(note.createdAt) : null;
   const updateDate = note ? formatDate(note.updatedAt) : null;
-
   useEffect(() => {
     const code = document.querySelectorAll(".detail-note code");
 
     if (code) {
       code.forEach((block) => {
         hljs.highlightElement(block as HTMLElement);
+        if (block.textContent !== null) {
+          const codeContent = block.textContent;
+          const copyButton = document.createElement("button");
+          copyButton.innerText = "COPY";
+          copyButton.className =
+            "bg-[#FAF0E6] text-[#001a2c] px-4 py-1 hover:shadow-buttonMainBrick font-bold";
+          copyButton.addEventListener("click", () => {
+            navigator.clipboard.writeText(codeContent);
+
+            copyButton.className =
+              "bg-green-500 px-4 py-1 font-bold shadow-buttonGreenBrick";
+            copyButton.innerText = "COPIED";
+
+            setTimeout(() => {
+              copyButton.className =
+                "bg-[#FAF0E6] text-[#001a2c] px-4 py-1 hover:shadow-buttonMainBrick font-bold";
+              copyButton.innerText = "COPY";
+            }, 2000);
+          });
+          block.parentElement?.insertAdjacentElement("beforebegin", copyButton);
+        }
       });
     }
   }, [isSuccess]);

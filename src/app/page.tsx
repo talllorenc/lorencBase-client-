@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import HPHeader from "@/components/HomePage/HPHeader/HPHeader";
 import Layout from "@/components/Layout/Layout";
-import NotesList from "@/components/NotesPage/NotesList";
+import NotesList from "@/components/Pages/NotesPage/NotesList";
 import HPNote from "@/components/HomePage/HPNote/HPNote";
 
 export const metadata: Metadata = {
@@ -26,3 +26,6 @@ export default function HomePage() {
     </Layout>
   );
 }
+
+
+

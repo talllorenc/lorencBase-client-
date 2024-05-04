@@ -2,11 +2,15 @@ import { useDeleteMutation } from "@/redux/slices/notes/notesApislice";
 import { INoteData } from "@/types/NotesData";
 import { useRouter } from "next/navigation";
 import useUserProfile from "@/hooks/userProfile";
+import { selectCurrentUser } from "@/redux/slices/auth/authSlice";
+import { useSelector } from "react-redux";
+
 interface IDeleteNoteButtonProps {
   note: INoteData;
 }
 const DeleteNoteButton = ({ note }: IDeleteNoteButtonProps) => {
-  const userProfile = useUserProfile();
+  // const userProfile = useUserProfile();
+  const userProfile = useSelector(selectCurrentUser);
   const router = useRouter();
   const [deleteNote, { isLoading, isSuccess }] = useDeleteMutation();
   const isCreatedBy = userProfile && userProfile._id === note.createdBy;
