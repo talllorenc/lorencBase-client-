@@ -2,12 +2,21 @@ import { api } from "@/app/api/api";
 
 export const notesApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
-    getAll: builder.query({
-      query: (filter) => ({
-        url: "/notes",
-        method: "GET",
-        params: filter,
-      }),
+    // getAll: builder.query({
+    //   query: (filter) => ({
+    //     url: "/notes",
+    //     method: "GET",
+    //     params: filter,
+    //   }),
+    // }),
+    getAll: builder.query<any, { page: number; perPage: number }>({
+      query: (arg) => {
+        const { page, perPage } = arg;
+        return {
+          url: 'notes/',
+          params: { page, perPage },
+        };
+      },
     }),
     getOneBySlug: builder.query({
       query: (slug) => ({
@@ -52,6 +61,13 @@ export const notesApiSlice = api.injectEndpoints({
         method: "PATCH",
       }),
     }),
+    searchNote: builder.query({
+      query: (query) => ({
+        url: `/search`,
+        method: "GET",
+        params: query,
+      }),
+    }),
   }),
 });
 
@@ -63,5 +79,6 @@ export const {
   useLikeNoteMutation,
   useUnlikeNoteMutation,
   useFavoriteAddMutation,
-  useFavoriteRemoveMutation
+  useFavoriteRemoveMutation,
+  useSearchNoteQuery,
 } = notesApiSlice;

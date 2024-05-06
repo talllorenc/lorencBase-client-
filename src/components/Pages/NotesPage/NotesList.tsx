@@ -8,29 +8,29 @@ import Breadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import ErrorMesage from "../../ErrorMesage/ErrorMesage";
 import { INoteData } from "@/types/NotesData";
 import { usePathname } from "next/navigation";
-import MainFilter from "@/components/FilterNotes/MainFilter";
-import { SetStateAction, useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import PagesPagination from "@/components/Pagination/PagesPagination";
+import LoadMore from "@/components/Pagination/LoadMore";
 
 interface INoteList {
   noteComponent: string;
 }
 
 const NotesList = ({ noteComponent }: INoteList) => {
-  const [filter, setFilter] = useState({});
-  const { data: notes, isLoading, isError, isSuccess } = useGetAllQuery(filter);
-  const pathname = usePathname();
+  const searchParams = useSearchParams().get("page");
+  const [page, setPage] = useState(searchParams ? parseInt(searchParams) : 1);
+  const perPage = 2;
 
-  const NoteComponent = noteComponent === "HPNote" ? HPNote : Note;
+  const { data, isLoading, isError, isSuccess } =  useGetAllQuery({
+    page: page,
+    perPage: perPage,
+  });
+  const [notes, setNotes] = useState([]);
 
-  const handleFilter = (value: object) => {
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      ...value,
-    }));
-  };
-
-  console.log(filter);
   
+  const pathname = usePathname();
+  const NoteComponent = noteComponent === "HPNote" ? HPNote : Note;
 
   return (
     <div className="container py-12 sm:py-16 lg:py-20">
@@ -39,8 +39,6 @@ const NotesList = ({ noteComponent }: INoteList) => {
       )}
       {pathname !== "/" && <Breadcrumbs />}
       <div className="mt-8">
-        <MainFilter handleFilter={handleFilter} setFilter={setFilter}/>
-
         {isLoading ? (
           [...Array(3)].map((_, index) => <SkeletonNotes key={index} />)
         ) : (
@@ -51,12 +49,15 @@ const NotesList = ({ noteComponent }: INoteList) => {
               isSuccess && (
                 <div className="flex flex-col gap-8">
                   {NoteComponent &&
-                    notes.map((note: INoteData) => (
+                    data.notes.map((note: INoteData) => (
                       <NoteComponent key={note._id} note={note} />
                     ))}
                 </div>
               )
             )}
+
+            {/* <PagesPagination data={data} perPage={perPage} page={page} setPage={setPage}/> */}
+            <LoadMore data={data} perPage={perPage} page={page} setPage={setPage} />
           </div>
         )}
       </div>

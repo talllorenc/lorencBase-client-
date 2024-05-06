@@ -2,7 +2,8 @@ import Link from "next/link";
 import { LoginButton } from "../Buttons/LoginButton/LoginButton";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import { useState } from "react";
-import {FaBars} from "react-icons/fa"
+import { FaBars } from "react-icons/fa";
+import SearchButton from "../Buttons/SearchButton/SearchButton";
 
 const headerLinks = [
   {
@@ -44,7 +45,8 @@ export function Header() {
             <p className="text-3xl font-bold">lorencBase</p>
           </Link>
 
-          <div className="hidden sm:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4">
+            <SearchButton />
             {headerLinks.map((link) => (
               <Link
                 key={link.id}
@@ -57,14 +59,13 @@ export function Header() {
             <LoginButton />
           </div>
 
-          <div className="sm:hidden">
-            <FaBars onClick={toggleMenu} className="text-2xl"/>
-            <MobileMenu isMenuOpen={isMenuOpen} closeMenu={closeMenu}/>
+          <div className="md:hidden flex gap-4 items-center">
+            <SearchButton />
+            <FaBars onClick={toggleMenu} className="text-2xl" />
+            <MobileMenu isMenuOpen={isMenuOpen} closeMenu={closeMenu} />
           </div>
         </nav>
       </div>
     </header>
   );
 }
-
-
